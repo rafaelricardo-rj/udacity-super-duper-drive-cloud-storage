@@ -1,6 +1,11 @@
 package com.udacity.jwdnd.course1.cloudstorage.model;
 
-public class User {
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+
+public class User implements UserDetails {
     private Integer userid;
     private String username;
     private String salt;
@@ -16,6 +21,32 @@ public class User {
         this.firstname = firstname;
         this.lastname = lastname;
     }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return false;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return false;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
 
     public Integer getUserid() {
         return userid;
@@ -64,4 +95,6 @@ public class User {
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
+
+
 }
