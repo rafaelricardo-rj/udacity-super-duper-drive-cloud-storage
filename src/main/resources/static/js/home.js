@@ -20,19 +20,27 @@ const saveNote = () => {
     let title = $("#note-title").val();
     let description = $("#note-description").val();
     let csrf = $('#note-form input[name=_csrf]').val();
-    $.post(baseurl+'note', {
-        notetitle: title,
-        notedescription: description,
-        _csrf: csrf
-     },
-     function call_back(response) {
-      console.log(response);
-      /*if(data == 'salvo'){
-          $('#modal-delete-file').modal('hide');
-          $(`#file_${idFile}`).remove();
-      } else {
-          result.error.map( e => toastr["error"](e));
-      }*/
-    });
-
+    if(title == ''){
+        toastr["error"]('The field Title can not be blank');
+    } else if (description == ''){
+        toastr["error"]('The field Description can not be blank');
+    } else {
+            $.post(baseurl+'note', {
+                notetitle: title,
+                notedescription: description,
+                _csrf: csrf
+            },
+             function call_back(response) {
+              //console.log(response.validated);
+              if(response.validated == true){
+                $('#noteModal').modal('hide');
+              }
+            }).fail(function (xhr, status, error){
+                let responseError = JSON.parse(xhr.responseText);
+                if(status == 'error'){
+                    responseError.errors.map( e => toastr["error"](e.defaultMessage));
+                }
+                console.log(responseError.errors);
+            });
+    }
 }

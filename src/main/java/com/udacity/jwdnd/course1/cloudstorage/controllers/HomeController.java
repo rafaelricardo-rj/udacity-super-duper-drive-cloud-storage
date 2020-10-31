@@ -13,19 +13,9 @@ import org.springframework.security.core.Authentication;
 @Controller
 @RequestMapping("/home")
 public class HomeController {
-    @Autowired
-    private UserService userService;
-
-    public HomeController(UserService userService){
-        this.userService = userService;
-    }
 
     @GetMapping
-    public String homeView(Authentication auth, NoteForm noteForm){
-        //User user = (User) auth.getPrincipal();
-        String username = auth.getName();
-        int userId = userService.getUser(auth.getName()).getUserid();
-        System.out.println(userId);
+    public String homeView(NoteForm noteForm){
         return "home";
     }
 }
