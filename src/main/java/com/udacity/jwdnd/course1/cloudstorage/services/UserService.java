@@ -2,16 +2,13 @@ package com.udacity.jwdnd.course1.cloudstorage.services;
 
 import com.udacity.jwdnd.course1.cloudstorage.mapper.UserMapper;
 import com.udacity.jwdnd.course1.cloudstorage.model.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
 import java.util.Base64;
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserService {
     private final UserMapper userMapper;
     private final HashService hashService;
 
@@ -40,10 +37,5 @@ public class UserService implements UserDetailsService {
     public int getUserIdByName(String username){
         User user = userMapper.getUser(username);
         return user.getUserid();
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        return userMapper.getUser(s);
     }
 }
