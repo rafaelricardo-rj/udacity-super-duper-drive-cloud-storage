@@ -5,6 +5,7 @@ import java.util.Map;
 public class ResponseNoteForm {
     private boolean validated;
     private Map<String, String> errorMessages;
+    private int noteId;
 
     public boolean isValidated() {
         return validated;
@@ -20,5 +21,13 @@ public class ResponseNoteForm {
 
     public Map<String, String> getErrorMessages() {
         return errorMessages;
+    }
+
+    public int getNoteId() {
+        return noteId;
+    }
+
+    public void setNoteId(int noteId) {
+        this.noteId = noteId;
     }
 }

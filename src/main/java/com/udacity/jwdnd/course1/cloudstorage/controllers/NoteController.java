@@ -1,13 +1,11 @@
 package com.udacity.jwdnd.course1.cloudstorage.controllers;
 
-import com.sun.jdi.request.ExceptionRequest;
-import com.udacity.jwdnd.course1.cloudstorage.mapper.NoteMapper;
 import com.udacity.jwdnd.course1.cloudstorage.model.Note;
 import com.udacity.jwdnd.course1.cloudstorage.model.User;
 import com.udacity.jwdnd.course1.cloudstorage.pojos.NoteForm;
 import com.udacity.jwdnd.course1.cloudstorage.response.ResponseNoteForm;
+import com.udacity.jwdnd.course1.cloudstorage.services.NoteService;
 import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -16,7 +14,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -30,14 +27,13 @@ import java.util.stream.Collectors;
 @RequestMapping("/note")
 public class NoteController {
 
-    @Autowired
-    private NoteMapper noteMapper;
+    private NoteService noteService;
 
-    @Autowired
     private UserService userService;
 
-    public NoteController(UserService userService){
+    public NoteController(UserService userService, NoteService noteService){
         this.userService = userService;
+        this.noteService = noteService;
     }
 
     @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -57,9 +53,10 @@ public class NoteController {
         } else {
             try {
                 int userId = userService.getUser(auth.getName()).getUserid();
-                newNote = noteMapper.insert(new Note(null, noteForm.getNotetitle(), noteForm.getNotedescription(), userId));
+                newNote = noteService.addNote(new Note(null, noteForm.getNotetitle(), noteForm.getNotedescription(), userId));
                 if(newNote > 0){
                     responseNoteForm.setValidated(true);
+                    responseNoteForm.setNoteId(newNote);
                 }
             } catch (Exception e){
                 responseNoteForm.setValidated(false);
@@ -67,6 +64,24 @@ public class NoteController {
                 errors.put("error", "Failed while saving the note in the database.");
                 responseNoteForm.setErrorMessages(errors);
                 //System.out.println(result);
+            }
+        }
+        return responseNoteForm;
+    }
+
+    @DeleteMapping(value = "{id}/delete", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    public ResponseNoteForm noteDelete(@PathVariable Integer id, Authentication auth){
+        ResponseNoteForm responseNoteForm = new ResponseNoteForm();
+        if(id != null) {
+            Note note = noteService.get(id);
+            User user = userService.getUser(auth.getName());
+            //only allow to delete the note if you are the owner
+            if(note.getUserid() == user.getUserid()){
+                int deleteNote = noteService.delete(note.getNoteid());
+                if(deleteNote > 0){
+                    responseNoteForm.setValidated(true);
+                }
             }
         }
         return responseNoteForm;

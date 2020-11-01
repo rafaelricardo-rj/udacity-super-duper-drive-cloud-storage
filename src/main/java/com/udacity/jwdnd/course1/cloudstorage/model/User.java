@@ -70,5 +70,4 @@ public class User {
         this.lastname = lastname;
     }
 
-
 }

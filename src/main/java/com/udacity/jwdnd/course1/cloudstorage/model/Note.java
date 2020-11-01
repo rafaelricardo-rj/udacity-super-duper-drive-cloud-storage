@@ -1,12 +1,11 @@
 package com.udacity.jwdnd.course1.cloudstorage.model;
 
-import org.apache.ibatis.annotations.Insert;
-
 public class Note {
     private Integer noteid;
     private String notetitle;
     private String notedescription;
     private int userid;
+    private User user;
 
     public Note(Integer noteid, String notetitle, String notedescription, int userid) {
         this.noteid = noteid;
@@ -46,4 +45,13 @@ public class Note {
     public void setUserid(int userid) {
         this.userid = userid;
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
 }

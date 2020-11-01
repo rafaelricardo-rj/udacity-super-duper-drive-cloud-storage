@@ -34,6 +34,7 @@ const saveNote = () => {
               //console.log(response.validated);
               if(response.validated == true){
                 $('#noteModal').modal('hide');
+                appendNewNote(response.noteId, title, description)
               }
             }).fail(function (xhr, status, error){
                 let responseError = JSON.parse(xhr.responseText);
@@ -44,3 +45,42 @@ const saveNote = () => {
             });
     }
 }
+
+const appendNewNote = (noteId, title, description) => {
+        const row = `
+            <tr>
+                <td>
+                    <button type="button" class="btn btn-success">Edit</button>
+                    <button class="btn btn-danger note-delete"  data-noteid=${noteId}>Delete</button>
+                </td>
+                <th scope="row">${title}</th>
+                <td>${description}</td>
+            </tr>
+        `;
+
+        $('#table-notes').prepend(row);
+}
+
+$(document).on("click", ".note-delete", function(event){
+
+        const id = $(this).attr("data-noteid");
+        const csrf = $('#note-form input[name=_csrf]').val();
+        if(!isNaN(id)){
+            $.post(`${baseurl}note/${id}/delete`, {
+                _csrf: csrf,
+                _method: 'DELETE'
+            },
+            function call_back(response) {
+                //console.log(response.validated);
+                if(response.validated == true){
+                    console.log('deletado')
+                    $( event.target ).closest( "tr" ).remove();
+                }
+            }).fail(function (xhr, status, error){
+                let responseError = JSON.parse(xhr.responseText);
+                if(status == 'error'){
+                    console.log(responseError.errors);
+                }
+            });
+        }
+ });
