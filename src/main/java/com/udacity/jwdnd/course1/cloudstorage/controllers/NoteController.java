@@ -86,4 +86,42 @@ public class NoteController {
         }
         return responseNoteForm;
     }
+
+    @PatchMapping(value = "{id}/update", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    public ResponseNoteForm noteUpdate(@ModelAttribute @Valid NoteForm noteForm, @PathVariable Integer id, Authentication auth, BindingResult result){
+        Map<String, String> errors;
+        ResponseNoteForm responseNoteForm = new ResponseNoteForm();
+        if(id != null) {
+            Note note = noteService.get(id);
+            User user = userService.getUser(auth.getName());
+            //only allow to update the note if you are the owner
+            if(note.getUserid() == user.getUserid()){
+                if(result.hasErrors()){
+                    //System.out.println(result.getAllErrors());
+                    errors = result.getFieldErrors().stream().collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
+                    responseNoteForm.setValidated(false);
+                    responseNoteForm.setErrorMessages(errors);
+                    return responseNoteForm;
+                } else {
+                    try {
+                        note.setNotetitle(noteForm.getNotetitle());
+                        note.setNotedescription(noteForm.getNotedescription());
+                        int update = noteService.update(note);
+                        if (update > 0){
+                            responseNoteForm.setValidated(true);
+                            responseNoteForm.setNoteId(id);
+                        }
+                    } catch (Exception e){
+                        responseNoteForm.setValidated(false);
+                        errors = new HashMap<>();
+                        errors.put("error", "Failed while saving the note in the database.");
+                        responseNoteForm.setErrorMessages(errors);
+                        //System.out.println(result);
+                    }
+                }
+            }
+        }
+        return responseNoteForm;
+    }
 }

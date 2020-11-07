@@ -17,24 +17,49 @@ function showCredentialModal(credentialId, url, username, password) {
 }
 
 const saveNote = () => {
+    // check if is to insert new note or update a note.
+    let el = document.getElementById("note-id");
+    let str = el.value;
+    let num = parseInt(str);
+    let url = '';
+    let method = '';
+    let action = '';
+    if(isNaN(num) || num == 0 || str == ''){
+        // insert new note
+        url = baseurl+'note';
+        method = 'POST';
+        action = 'insert';
+    } else if( num > 0){
+        // update note
+        url = `${baseurl}note/${num}/update`;
+        console.log(url);
+        method = 'PATCH';
+        action = 'update';
+    }
+    console.log(action);
     let title = $("#note-title").val();
     let description = $("#note-description").val();
     let csrf = $('#note-form input[name=_csrf]').val();
+
     if(title == ''){
         toastr["error"]('The field Title can not be blank');
     } else if (description == ''){
         toastr["error"]('The field Description can not be blank');
     } else {
-            $.post(baseurl+'note', {
+            $.post(url, {
                 notetitle: title,
                 notedescription: description,
-                _csrf: csrf
+                _csrf: csrf,
+                _method: method
             },
              function call_back(response) {
               //console.log(response.validated);
               if(response.validated == true){
                 $('#noteModal').modal('hide');
-                appendNewNote(response.noteId, title, description)
+                if(action == 'update'){
+                    $(`#noteRow-${num}`).remove();
+                }
+                appendNewNote(response.noteId, title, description);
               }
             }).fail(function (xhr, status, error){
                 let responseError = JSON.parse(xhr.responseText);
@@ -48,10 +73,15 @@ const saveNote = () => {
 
 const appendNewNote = (noteId, title, description) => {
         const row = `
-            <tr>
+            <tr id=noteRow-${noteId}>
                 <td>
-                    <button type="button" class="btn btn-success">Edit</button>
-                    <button class="btn btn-danger note-delete"  data-noteid=${noteId}>Delete</button>
+                    <button type="button" class="btn btn-success note-edit"
+                        data-noteid="${noteId}"
+                        data-note-title="${title}"
+                        data-note-description="${description}">
+                        Edit
+                    </button>
+                    <button class="btn btn-danger note-delete"  data-noteid="${noteId}">Delete</button>
                 </td>
                 <th scope="row">${title}</th>
                 <td>${description}</td>
@@ -84,3 +114,13 @@ $(document).on("click", ".note-delete", function(event){
             });
         }
  });
+
+ $(document).on("click", ".note-edit", function(event){
+
+    const id = $(this).attr("data-noteid");
+    const title = $(this).attr("data-note-title");
+    const description = $(this).attr("data-note-description");
+
+    showNoteModal(id, title, description);
+
+  });
