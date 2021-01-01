@@ -1,0 +1,24 @@
+2020-11-08 11:24:32 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "gI/9IrH9sbN60LXBuLciAg==" [22018-200]
+2020-11-08 11:26:43 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "gI/9IrH9sbN60LXBuLciAg==" [22018-200]
+2020-11-08 11:33:15 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "gI/9IrH9sbN60LXBuLciAg==" [22018-200]
+2020-11-08 11:34:36 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "gI/9IrH9sbN60LXBuLciAg==" [22018-200]
+2020-12-31 18:05:43 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "gI/9IrH9sbN60LXBuLciAg==" [22018-200]
+2020-12-31 19:07:39 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "gI/9IrH9sbN60LXBuLciAg==" [22018-200]
+2020-12-31 19:13:42 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "gI/9IrH9sbN60LXBuLciAg==" [22018-200]
+2020-12-31 19:16:02 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "gI/9IrH9sbN60LXBuLciAg==" [22018-200]
+2020-12-31 19:30:35 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "gI/9IrH9sbN60LXBuLciAg==" [22018-200]
+2020-12-31 19:34:07 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "gI/9IrH9sbN60LXBuLciAg==" [22018-200]
+2020-12-31 19:37:19 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "Sok6VVFcpHRhAEm+IeF9ZQ==" [22018-200]
+2020-12-31 19:54:58 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "b1HWO4RrS/7U6B7ro0ymOQ==" [22018-200]
