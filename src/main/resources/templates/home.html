@@ -26,17 +26,17 @@
                 </nav>
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="nav-files" role="tabpanel" aria-labelledby="nav-files-tab">
-                        <form action="#" enctype="multipart/form-data" method="POST">
+                        <form action="#" th:action="@{/file}"  enctype="multipart/form-data" method="POST" id="file-form">
                             <div class="container">
                                 <div class="row" style="margin: 1em;">
                                     <div class="col-sm-2">
                                         <label for="fileUpload">Upload a New File:</label>
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="file" class="form-control-file" id="fileUpload" name="fileUpload">
+                                        <input type="file" class="form-control-fileUpload" id="fileUpload" name="fileUpload">
                                     </div>
                                     <div class="col-sm-4">
-                                        <button type="submit" class="btn btn-dark">Upload</button>
+                                        <button type="button" onclick="uploadFile();" class="btn btn-dark">Upload</button>
                                     </div>
                                 </div>
                             </div>
@@ -50,12 +50,12 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
+                                <tr th:each="file : ${files}" th:id="'fileRow-' + ${file.fileId}">
                                     <td>
                                         <a target="_blank" class="btn btn-success">View</a>
-                                        <a  class="btn btn-danger">Delete</a>
+                                        <button class="btn btn-danger file-delete"  th:data-file-id="${file.fileId}">Delete</button>
                                     </td>
-                                    <th scope="row">ExampleFile.txt</th>
+                                    <th th:text="${file.filename}" scope="row">ExampleFile.txt</th>
                                 </tr>
                                 </tbody>
                             </table>
@@ -201,6 +201,7 @@
         <script th:src="@{/js/jquery-3.5.1.min.js}"></script>
         <script th:src="@{/js/popper.min.js}"></script>
         <script th:src="@{/js/bootstrap.min.js}"></script>
+        <script th:src="@{/js/filesUpload.js}"></script>
         <script th:src="@{/js/notes.js}"></script>
         <script th:src="@{/js/credentials.js}"></script>
         <script th:src="@{/js/toastr.min.js}"></script>
