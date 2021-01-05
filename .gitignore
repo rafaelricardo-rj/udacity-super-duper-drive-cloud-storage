@@ -35,3 +35,6 @@ target/
 ###
 storage/*
 !storage/.gitkeep
+
+### database h2
+database.*

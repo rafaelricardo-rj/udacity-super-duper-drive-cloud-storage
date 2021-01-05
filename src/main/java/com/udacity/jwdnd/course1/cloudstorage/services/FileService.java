@@ -14,6 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,24 +41,25 @@ public class FileService {
     }
 
     public int addFile(FileUpload fileUpload){
-        return fileMapper.insert(fileUpload);
+        int result = fileMapper.insert(fileUpload);
+        return fileUpload.getFileId();
     }
 
     public int delete(int fileId){
         return fileMapper.deleteFile(fileId);
     }
 
-    public Map validateFile(MultipartFile fileUpload){
-        Map<String, String> errors = new HashMap<>();
+    public List validateFile(MultipartFile fileUpload){
+        List<String> errors = new ArrayList<>();
         if(fileUpload.isEmpty()){
-            errors.put("file-empty", "There is no file");
+            errors.add("There is no file");
         }
         if(fileUpload.getSize() > MAX_FILE_SIZE_IN_BYTES){
-            errors.put("file-size-exceed", "The file size is bigger then permitted");
+            errors.add("The file size is bigger then permitted");
         }
         FileUpload fileStored = fileMapper.getFileByFilename(fileUpload.getOriginalFilename());
         if(fileStored != null){
-            errors.put("filename-exist", "There is a file with the same name already. Choose another name.");
+            errors.add("There is a file with the same name already. Choose another name.");
         }
         return errors;
     }
@@ -82,5 +84,9 @@ public class FileService {
         if(new File(userFolder).exists()){
             new File(userFolder).delete();
         }
+    }
+
+    public String getUploadDir(){
+        return this.uploadDir;
     }
 }

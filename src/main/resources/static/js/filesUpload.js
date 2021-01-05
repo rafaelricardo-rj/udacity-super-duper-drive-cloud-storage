@@ -36,11 +36,34 @@ const uploadFile = () => {
         processData: false,
         contentType: false,
         cache: false,
-        success: function (res) {
-            console.log(res);
+        success: function (response) {
+            if(response.validated == true){
+                appendNewFile(response.fileId, response.url, response.filename);
+            } else if(response.validated == false){
+                response.errorMessages.map( e => toastr["error"](e));
+                console.log(response.errorMessages);
+            }
+            $('#file-form').trigger("reset");
         },
-        error: function (err) {
-            console.error(err);
+        error: function (status) {
+            //let responseError = JSON.parse(xhr.responseText);
+            if(status == 'error'){
+                responseError.errors.map( e => toastr["error"](e.defaultMessage));
+            }
         }
     });
+}
+
+const appendNewFile = (fileId, url, filename) => {
+        const row = `
+            <tr id=fileRow-${fileId}>
+                <td>
+                    <a href="${url}" target="_blank" class="btn btn-success">View</a>
+                    <button class="btn btn-danger file-delete"  data-file-id="${fileId}">Delete</button>
+                </td>
+                <th scope="row">${filename}</th>
+            </tr>
+        `;
+
+        $('#table-files').prepend(row);
 }

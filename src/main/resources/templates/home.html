@@ -49,10 +49,10 @@
                                         <th style="width: 80%" scope="col">File Name</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="table-files">
                                 <tr th:each="file : ${files}" th:id="'fileRow-' + ${file.fileId}">
                                     <td>
-                                        <a target="_blank" class="btn btn-success">View</a>
+                                        <a th:href="@{'/file/download/' + ${file.filename}}" target="_blank" class="btn btn-success">View</a>
                                         <button class="btn btn-danger file-delete"  th:data-file-id="${file.fileId}">Delete</button>
                                     </td>
                                     <th th:text="${file.filename}" scope="row">ExampleFile.txt</th>
