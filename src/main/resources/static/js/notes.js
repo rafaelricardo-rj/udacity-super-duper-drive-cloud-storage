@@ -63,7 +63,7 @@ const saveNote = () => {
 
 const appendNewNote = (noteId, title, description) => {
         const row = `
-            <tr id=noteRow-${noteId}>
+            <tr id=noteRow-${noteId} class="newNoteTest">
                 <td>
                     <button type="button" class="btn btn-success note-edit"
                         data-noteid="${noteId}"
