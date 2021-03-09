@@ -1,8 +1,11 @@
 package com.udacity.jwdnd.course1.cloudstorage;
 
+import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -15,9 +18,11 @@ public class HomePage {
     //<h4>Welcome</h4>
     private By messageBy = By.tagName("h4");
 
-    private By newNote = By.cssSelector("table.tbody.tr.newNote");
+    private By newNote = By.className("newNoteTest");
 
     private By addNewNoteButton = By.id("addNewNote");
+
+    //private By saveNoteButton = By.id("saveNoteButton");
 
     @FindBy(id = "logoutButton")
     private WebElement logoutButton;
@@ -52,7 +57,9 @@ public class HomePage {
     }
 
     public Boolean isNoteCreated(){
-        return driver.findElement(newNote).isDisplayed();
+        Actions bar = new Actions(driver);
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        return wait.until(ExpectedConditions.presenceOfElementLocated(By.className("newNoteTest"))).isDisplayed();
     }
 
     public void createNote(){
@@ -61,25 +68,28 @@ public class HomePage {
         driver.findElement(By.id("nav-notes-tab")).click();
         WebDriverWait wait = new WebDriverWait(driver, 200);
         wait.until(ExpectedConditions.elementToBeClickable(addNewNoteButton)).click();
-        //wait.until(webDriver -> webDriver.findElement(By.id("note-title"))).sendKeys("Test seleniun title");
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("note-title"))).sendKeys("fdfdfd");
-        noteTitleInput.sendKeys("test caralho");
-        //marker.sendKeys("Test seleniun title");
-        //wait.until(webDriver -> webDriver.findElement(By.id("note-title")));
-        wait.until(ExpectedConditions.elementToBeClickable(noteDescriptionInput)).sendKeys("Seleniun test");
-        //wait.until(ExpectedConditions.elementToBeClickable(By.id("notesClick"))).click();
+        WebDriverWait wait_modal = new WebDriverWait(driver, 10);
 
+        //Switch to active element here in our case its model dialogue box.
+        driver.switchTo().activeElement();
 
+        wait_modal.until(ExpectedConditions.visibilityOf(driver.findElement(By.id("note-title")))).sendKeys("sdsds");
+        wait_modal.until(ExpectedConditions.visibilityOf(driver.findElement(By.id("note-description")))).sendKeys("description");
 
-
-        //driver.findElement(addNewNoteButton).click();
-
-        saveNoteButton.click();
+        //waitForVisibility(saveNoteButton);
+        driver.findElement(By.id("saveNoteButton")).click();
+        //((JavascriptExecutor) driver).executeScript("arguments[0].click();", saveNoteButton);
+        Assertions.assertEquals(true, isNoteCreated());
     }
 
     public HomePage manageProfile() {
         // Page encapsulation to manage profile functionality
         return new HomePage(driver);
+    }
+
+    private void waitForVisibility(WebElement element) throws Error {
+        new WebDriverWait(driver, 40)
+                .until(ExpectedConditions.visibilityOf(element));
     }
 
     public void logout(){

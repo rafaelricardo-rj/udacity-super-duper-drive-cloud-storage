@@ -93,7 +93,7 @@
                             </table>
                         </div>
 
-                        <div class="modal fade" id="noteModal" tabindex="-1" role="dialog" aria-labelledby="noteModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="noteModal" data-test="note-modal" tabindex="-1" role="dialog" aria-labelledby="noteModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -107,7 +107,7 @@
                                             <input type="hidden" name="noteId" id="note-id" value="0">
                                             <div class="form-group">
                                                 <label for="note-title" class="col-form-label">Title</label>
-                                                <input type="text" name="noteTitle" th:field="*{notetitle}" class="form-control" id="note-title" maxlength="20" required>
+                                                <input type="text" name="noteTitle" th:field="*{notetitle}" class="form-control" placeholder="Title" id="note-title" maxlength="20" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="note-description" class="col-form-label">Description</label>
