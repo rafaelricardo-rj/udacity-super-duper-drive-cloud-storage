@@ -43,7 +43,7 @@ const saveNote = () => {
                 _method: method
             },
              function call_back(response) {
-              //console.log(response.validated);
+              console.log(response);
               if(response.validated == true){
                 $('#noteModal').modal('hide');
                 if(action == 'update'){
@@ -52,11 +52,12 @@ const saveNote = () => {
                 appendNewNote(response.noteId, title, description);
               }
             }).fail(function (xhr, status, error){
-                let responseError = JSON.parse(xhr.responseText);
+                console.log(xhr);
+                //let responseError = JSON.parse(xhr.responseText);
                 if(status == 'error'){
-                    responseError.errors.map( e => toastr["error"](e.defaultMessage));
+                    //responseError.errors.map( e => toastr["error"](e.defaultMessage));
                 }
-                console.log(responseError.errors);
+                //console.log(responseError.errors);
             });
     }
 }

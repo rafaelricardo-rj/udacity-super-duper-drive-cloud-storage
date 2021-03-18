@@ -43,6 +43,6 @@ public class NotesTest {
         HomePage homePage = new HomePage(driver);
         Thread.sleep(2000);
         homePage.createNote();
-        //Assertions.assertEquals(true, homePage.isNoteCreated());
+        Assertions.assertEquals(true, homePage.isNoteCreated());
     }
 }
