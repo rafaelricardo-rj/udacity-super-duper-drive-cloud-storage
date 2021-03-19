@@ -44,5 +44,6 @@ public class NotesTest {
         Thread.sleep(2000);
         homePage.createNote();
         Assertions.assertEquals(true, homePage.isNoteCreated());
+        Thread.sleep(30000);
     }
 }

@@ -36,29 +36,34 @@ const saveNote = () => {
     } else if (description == ''){
         toastr["error"]('The field Description can not be blank');
     } else {
-            $.post(url, {
-                notetitle: title,
-                notedescription: description,
-                _csrf: csrf,
-                _method: method
-            },
-             function call_back(response) {
-              console.log(response);
-              if(response.validated == true){
-                $('#noteModal').modal('hide');
-                if(action == 'update'){
-                    $(`#noteRow-${num}`).remove();
-                }
-                appendNewNote(response.noteId, title, description);
-              }
-            }).fail(function (xhr, status, error){
-                console.log(xhr);
-                //let responseError = JSON.parse(xhr.responseText);
-                if(status == 'error'){
-                    //responseError.errors.map( e => toastr["error"](e.defaultMessage));
-                }
-                //console.log(responseError.errors);
-            });
+        $.post(url, {
+            notetitle: title,
+            notedescription: description,
+            _csrf: csrf,
+            _method: method
+        },
+         function call_back(response) {
+          console.log(response);
+          if(response.validated == true){
+            $('#noteModal').modal('hide');
+            if(action == 'update'){
+                $(`#noteRow-${num}`).remove();
+            }
+            appendNewNote(response.noteId, title, description);
+            $('#noteModal').modal('hide');
+          } else {
+            $('#noteModal').modal('hide');
+            toastr["error"]("The Note was not created.")
+          }
+
+        }).fail(function (xhr, status, error){
+            console.log(xhr);
+            //let responseError = JSON.parse(xhr.responseText);
+            if(status == 'error'){
+                //responseError.errors.map( e => toastr["error"](e.defaultMessage));
+            }
+            //console.log(responseError.errors);
+        });
     }
 }
 

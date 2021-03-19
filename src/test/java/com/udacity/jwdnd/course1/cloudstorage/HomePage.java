@@ -79,16 +79,10 @@ public class HomePage {
 
         //waitForVisibility(saveNoteButton);
         driver.findElement(By.id("saveNoteButton")).click();
-        //((JavascriptExecutor) driver).executeScript("arguments[0].click();", saveNoteButton);
         //JavascriptExecutor js = (JavascriptExecutor) driver;
         //js.executeScript("document.getElementById('saveNoteButton').click()");
         // IF I COMMENT THE LINE BELOW THE NOTE IS CREATED AND THE TEST IS OK BUT ALSO I CAN'T TEST IF THE NOTE IS CREATED.
-        //Assertions.assertEquals(true, isNoteCreated());
-        try {
-            Thread.sleep(30000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Assertions.assertEquals(true, isNoteCreated());
     }
 
     public HomePage manageProfile() {
