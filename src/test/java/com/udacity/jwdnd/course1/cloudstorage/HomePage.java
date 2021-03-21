@@ -90,7 +90,7 @@ public class HomePage {
         Boolean isShown = wait.until(ExpectedConditions.presenceOfElementLocated(By.className("note-delete"))).isDisplayed();
         //waitForVisibility(driver.findElement(By.className("note-delete")));
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", driver.findElement(deleteNoteButton));
-        //driver.navigate().refresh();
+        driver.navigate().refresh();
     }
 
     public HomePage manageProfile() {
