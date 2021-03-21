@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.sql.Time;
+import java.util.List;
 
 public class HomePage {
     protected static WebDriver driver;
@@ -18,10 +19,9 @@ public class HomePage {
     //<h4>Welcome</h4>
     private By messageBy = By.tagName("h4");
 
-    private By newNote = By.className("newNoteTest");
-
     private By addNewNoteButton = By.id("addNewNote");
 
+    private By deleteNoteButton = By.className("note-delete");
     //private By saveNoteButton = By.id("saveNoteButton");
 
     @FindBy(id = "logoutButton")
@@ -38,7 +38,6 @@ public class HomePage {
 
     @FindBy(id = "nav-notes-tab")
     private WebElement notesAba;
-
 
     public HomePage(WebDriver driver){
         this.driver = driver;
@@ -57,32 +56,41 @@ public class HomePage {
     }
 
     public Boolean isNoteCreated(){
-        Actions bar = new Actions(driver);
         WebDriverWait wait = new WebDriverWait(driver, 10);
         return wait.until(ExpectedConditions.presenceOfElementLocated(By.className("newNoteTest"))).isDisplayed();
     }
 
-    public void createNote(){
-        driver.manage().deleteAllCookies();
-        driver.findElement(By.id("nav-notes-tab")).click();
+    // verify that new note title is created:
+    public WebElement getNewNote() {
+        return driver.findElement(By.className("newNoteTest"));
+    }
 
-        driver.findElement(By.id("nav-notes-tab")).click();
+    public void createNote(){
+
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", driver.findElement(By.id("nav-notes-tab")));
         WebDriverWait wait = new WebDriverWait(driver, 200);
-        wait.until(ExpectedConditions.elementToBeClickable(addNewNoteButton)).click();
-        WebDriverWait wait_modal = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.elementToBeClickable(addNewNoteButton));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", driver.findElement(addNewNoteButton));
 
         //Switch to active element here in our case its model dialogue box.
         driver.switchTo().activeElement();
 
-        wait_modal.until(ExpectedConditions.visibilityOf(driver.findElement(By.id("note-title")))).sendKeys("sdsds");
-        wait_modal.until(ExpectedConditions.visibilityOf(driver.findElement(By.id("note-description")))).sendKeys("description");
+        wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.id("note-title"))));
+        wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.id("note-description"))));
 
-        //waitForVisibility(saveNoteButton);
-        driver.findElement(By.id("saveNoteButton")).click();
-        //JavascriptExecutor js = (JavascriptExecutor) driver;
-        //js.executeScript("document.getElementById('saveNoteButton').click()");
-        // IF I COMMENT THE LINE BELOW THE NOTE IS CREATED AND THE TEST IS OK BUT ALSO I CAN'T TEST IF THE NOTE IS CREATED.
-        Assertions.assertEquals(true, isNoteCreated());
+        ((JavascriptExecutor) driver).executeScript("arguments[0].value='" + "Test title" + "';", driver.findElement(By.id("note-title")));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].value='" + "description test" + "';", driver.findElement(By.id("note-description")));
+
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", driver.findElement(By.id("saveNoteButton")));
+    }
+
+    public void deleteNote(){
+        createNote();
+        WebDriverWait wait = new WebDriverWait(driver, 200);
+        Boolean isShown = wait.until(ExpectedConditions.presenceOfElementLocated(By.className("note-delete"))).isDisplayed();
+        //waitForVisibility(driver.findElement(By.className("note-delete")));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", driver.findElement(deleteNoteButton));
+        //driver.navigate().refresh();
     }
 
     public HomePage manageProfile() {
@@ -96,6 +104,6 @@ public class HomePage {
     }
 
     public void logout(){
-        this.logoutButton.click();
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", logoutButton);
     }
 }
