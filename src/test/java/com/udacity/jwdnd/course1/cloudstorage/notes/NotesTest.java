@@ -12,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -58,13 +59,18 @@ public class NotesTest {
     }
 
     @Test
-    public void deleteNote(){
+    public void deleteNote() throws InterruptedException {
         HomePage homePage = new HomePage(driver);
         homePage.deleteNote();
         // test there should be no note data on homepage:
         assertThrows(NoSuchElementException.class, () -> {
             homePage.getNewNote();
         });
+    }
 
+    @Test
+    public void editNote(){
+        HomePage homePage = new HomePage(driver);
+        homePage.editNote();
     }
 }

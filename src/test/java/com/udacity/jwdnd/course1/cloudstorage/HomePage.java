@@ -13,6 +13,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.sql.Time;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class HomePage {
     protected static WebDriver driver;
 
@@ -22,7 +24,8 @@ public class HomePage {
     private By addNewNoteButton = By.id("addNewNote");
 
     private By deleteNoteButton = By.className("note-delete");
-    //private By saveNoteButton = By.id("saveNoteButton");
+
+    private By editNoteButton = By.className("note-edit");
 
     @FindBy(id = "logoutButton")
     private WebElement logoutButton;
@@ -87,8 +90,40 @@ public class HomePage {
     public void deleteNote(){
         createNote();
         WebDriverWait wait = new WebDriverWait(driver, 200);
-        Boolean isShown = wait.until(ExpectedConditions.presenceOfElementLocated(By.className("note-delete"))).isDisplayed();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.className("note-delete"))).isDisplayed();
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", driver.findElement(deleteNoteButton));
+        wait.until(ExpectedConditions.invisibilityOf(driver.findElement(deleteNoteButton)));
+    }
+
+    public void editNote(){
+        createNote();
+        WebDriverWait wait = new WebDriverWait(driver, 200);
+        //wait the note to appear
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.className("note-edit"))).isDisplayed();
+        //clink on edit button
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", driver.findElement(editNoteButton));
+        //wait the input-text visibility
+        wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.id("note-title"))));
+        //fetch the original title note
+        String titleBeforeEdit = driver.findElement(By.id("note-title")).getAttribute("value");
+        //fetch the original description
+        String descBeforeEdit = driver.findElement(By.id("note-description")).getAttribute("value");
+        //set a new title
+        ((JavascriptExecutor) driver).executeScript("arguments[0].value='" + "Test title Edited" + "';", driver.findElement(By.id("note-title")));
+        //set new description
+        ((JavascriptExecutor) driver).executeScript("arguments[0].value='" + "description test Edited" + "';", driver.findElement(By.id("note-description")));
+        //save the note
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", driver.findElement(By.id("saveNoteButton")));
+        //wait the modal
+        wait.until(ExpectedConditions.invisibilityOf(driver.findElement(By.id("noteModal"))));
+        //open the note again to check if the note has been changed
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", driver.findElement(editNoteButton));
+        //fetch the title
+        String titleAfterEdit = driver.findElement(By.id("note-title")).getAttribute("value");
+        //fetch the description
+        String descAfterEdit = driver.findElement(By.id("note-description")).getAttribute("value");
+        assertEquals(false, titleBeforeEdit.equals(titleAfterEdit));
+        assertEquals(false, descBeforeEdit.equals(descAfterEdit));
     }
 
     public HomePage manageProfile() {
