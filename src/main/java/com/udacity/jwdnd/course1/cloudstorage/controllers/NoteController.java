@@ -42,7 +42,6 @@ public class NoteController {
         int newNote;
         Map<String, String> errors;
         ResponseNoteForm responseNoteForm = new ResponseNoteForm();
-        System.out.println(noteForm.getNotetitle());
         if(result.hasErrors()){
 
             //System.out.println(result.getAllErrors());
@@ -63,7 +62,6 @@ public class NoteController {
                 errors = new HashMap<>();
                 errors.put("error", "Failed while saving the note in the database.");
                 responseNoteForm.setErrorMessages(errors);
-                //System.out.println(result);
             }
         }
         return responseNoteForm;

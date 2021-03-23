@@ -68,7 +68,7 @@ const saveCredential = () => {
 
 const appendNewCredential = (credentialId, url, username, encryptedPassword) => {
         const row = `
-            <tr id=credentialRow-${credentialId}>
+            <tr id=credentialRow-${credentialId} class="newCredentialTest">
                 <td>
                     <button type="button" class="btn btn-success credential-open"
                         data-credential-id="${credentialId}"
