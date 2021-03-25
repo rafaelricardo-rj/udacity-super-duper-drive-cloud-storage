@@ -69,7 +69,7 @@ public class CredentialPage {
 
     @Test
     public void editCredential(){
-        HomePage homePage = new HomePage(driver);
-        homePage.editNote();
+        CredentialTest credentialTest = new CredentialTest(driver);
+        credentialTest.editCredential();
     }
 }

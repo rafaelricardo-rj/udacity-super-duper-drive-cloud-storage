@@ -20,6 +20,7 @@ public class CredentialTest {
     private By passwordInput = By.id("credential-password");
     private By submitButton = By.id("saveCredentialButton");
     private By deleteCredentialButton = By.className("credential-delete");
+    private By editCredentialButton = By.className("credential-open");
     private By newCredentialTest = By.className("newCredentialTest");
 
     public CredentialTest(WebDriver driver){
@@ -66,5 +67,43 @@ public class CredentialTest {
 
     public WebElement getNewCredential() {
         return driver.findElement(newCredentialTest);
+    }
+
+    public void editCredential(){
+        createCredential();
+        WebDriverWait wait = new WebDriverWait(driver, 200);
+        //wait the credential to appear
+        wait.until(ExpectedConditions.presenceOfElementLocated(editCredentialButton)).isDisplayed();
+        //click on edit button
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", driver.findElement(editCredentialButton));
+        //wait the url input visibility
+        wait.until(ExpectedConditions.visibilityOf(driver.findElement(urlInput)));
+        //fetch the original url value
+        String urlBeforeEdit = driver.findElement(urlInput).getAttribute("value");
+        //fetch the original username value
+        String usernameBeforeEdit = driver.findElement(usernameInput).getAttribute("value");
+        //fetch the original password value
+        String passwordBeforeEdit = driver.findElement(passwordInput).getAttribute("value");
+        //set a new url
+        ((JavascriptExecutor) driver).executeScript("arguments[0].value='" + "https//myspace.com" + "';", driver.findElement(urlInput));
+        //set new username
+        ((JavascriptExecutor) driver).executeScript("arguments[0].value='" + "description test Edited" + "';", driver.findElement(usernameInput));
+        //set new password
+        ((JavascriptExecutor) driver).executeScript("arguments[0].value='" + "description test Edited" + "';", driver.findElement(passwordInput));
+        //save the credential
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", driver.findElement(submitButton));
+        //wait the modal
+        wait.until(ExpectedConditions.invisibilityOf(driver.findElement(By.id("credentialModal"))));
+        //open the note again to check if the note has been changed
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", driver.findElement(editCredentialButton));
+        //fetch the url
+        String urlAfterEdit = driver.findElement(urlInput).getAttribute("value");
+        //fetch the username
+        String usernameAfterEdit = driver.findElement(usernameInput).getAttribute("value");
+        //fetch the username
+        String passwordAfterEdit = driver.findElement(passwordInput).getAttribute("value");
+        assertEquals(false, urlBeforeEdit.equals(urlAfterEdit));
+        assertEquals(false, usernameBeforeEdit.equals(usernameAfterEdit));
+        assertEquals(false, passwordBeforeEdit.equals(passwordAfterEdit));
     }
 }
