@@ -58,11 +58,12 @@ public class CredentialPage {
 
     @Test
     public void deleteCredential() throws InterruptedException {
-        HomePage homePage = new HomePage(driver);
-        homePage.deleteNote();
+        CredentialTest credentialTest = new CredentialTest(driver);
+        credentialTest.createCredential();
+        credentialTest.deleteCredential();
         // test there should be no note data on homepage:
         assertThrows(NoSuchElementException.class, () -> {
-            homePage.getNewNote();
+            credentialTest.getNewCredential();
         });
     }
 

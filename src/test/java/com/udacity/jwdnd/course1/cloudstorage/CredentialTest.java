@@ -19,6 +19,8 @@ public class CredentialTest {
     private By usernameInput = By.id("credential-username");
     private By passwordInput = By.id("credential-password");
     private By submitButton = By.id("saveCredentialButton");
+    private By deleteCredentialButton = By.className("credential-delete");
+    private By newCredentialTest = By.className("newCredentialTest");
 
     public CredentialTest(WebDriver driver){
         this.driver = driver;
@@ -52,5 +54,17 @@ public class CredentialTest {
     public Boolean isCredentialCreated(){
         WebDriverWait wait = new WebDriverWait(driver, 100);
         return wait.until(ExpectedConditions.presenceOfElementLocated(By.className("newCredentialTest"))).isDisplayed();
+    }
+
+    public void deleteCredential(){
+        //createCredential();
+        WebDriverWait wait = new WebDriverWait(driver, 200);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.className("credential-delete"))).isDisplayed();
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", driver.findElement(deleteCredentialButton));
+        wait.until(ExpectedConditions.invisibilityOf(driver.findElement(deleteCredentialButton)));
+    }
+
+    public WebElement getNewCredential() {
+        return driver.findElement(newCredentialTest);
     }
 }
