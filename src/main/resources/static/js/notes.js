@@ -43,12 +43,13 @@ const saveNote = () => {
             _method: method
         },
          function call_back(response) {
-          console.log(response);
+          //console.log(response);
           if(response.validated == true){
             $('#noteModal').modal('hide');
             if(action == 'update'){
                 $(`#noteRow-${num}`).remove();
             }
+            toastr["success"]("Note Saved!")
             appendNewNote(response.noteId, title, description);
             $('#noteModal').modal('hide');
           } else {
@@ -57,10 +58,11 @@ const saveNote = () => {
           }
 
         }).fail(function (xhr, status, error){
-            console.log(xhr);
+            //console.log(xhr);
             //let responseError = JSON.parse(xhr.responseText);
             if(status == 'error'){
-                //responseError.errors.map( e => toastr["error"](e.defaultMessage));
+                responseError.errors.map( e => toastr["error"](e.defaultMessage));
+                toastr["error"]("Ops! Something wrong happened!")
             }
             //console.log(responseError.errors);
         });
@@ -99,7 +101,8 @@ $(document).on("click", ".note-delete", function(event){
             function call_back(response) {
                 //console.log(response.validated);
                 if(response.validated == true){
-                    console.log('deletado')
+                    //console.log('deletado')
+                    toastr["success"]("Note deleted.")
                     $( event.target ).closest( "tr" ).remove();
                 }
             }).fail(function (xhr, status, error){

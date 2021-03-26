@@ -54,6 +54,7 @@ const saveCredential = () => {
                 if(action == 'update'){
                     $(`#credentialRow-${num}`).remove();
                 }
+                toastr["success"]("Credential Saved.")
                 appendNewCredential(response.credentialId, url, username, response.encryptedPassword);
               }
             }).fail(function (xhr, status, error){
@@ -96,15 +97,18 @@ $(document).on("click", ".credential-delete", function(event){
                 _method: 'DELETE'
             },
             function call_back(response) {
-                console.log(response);
+                //console.log(response);
                 if(response.validated == true){
-                    console.log('deletado')
+                    //console.log('deletado')
+                    toastr["success"]("Credential deleted.")
                     $( event.target ).closest( "tr" ).remove();
                 }
             }).fail(function (xhr, status, error){
                 let responseError = JSON.parse(xhr.responseText);
                 if(status == 'error'){
-                    console.log(responseError.errors);
+                    //console.log(responseError.errors);
+                    responseError.errors.map( e => toastr["error"](e.defaultMessage));
+                    toastr["error"]("Ops! Something wrong happened!")
                 }
             });
         }

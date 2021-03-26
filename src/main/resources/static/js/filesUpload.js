@@ -8,9 +8,10 @@ $(document).on("click", ".file-delete", function(event){
                 _method: 'DELETE'
             },
             function call_back(response) {
-                console.log(response);
+                //console.log(response);
                 if(response.validated == true){
-                    console.log('deletado')
+                    //console.log('deletado')
+                    toastr["success"]("File deleted.")
                     $( event.target ).closest( "tr" ).remove();
                 }
             }).fail(function (xhr, status, error){
@@ -38,6 +39,7 @@ const uploadFile = () => {
         cache: false,
         success: function (response) {
             if(response.validated == true){
+                toastr["success"]("File uploaded successfully!")
                 appendNewFile(response.fileId, response.url, response.filename);
             } else if(response.validated == false){
                 response.errorMessages.map( e => toastr["error"](e));
@@ -49,6 +51,7 @@ const uploadFile = () => {
             //let responseError = JSON.parse(xhr.responseText);
             if(status == 'error'){
                 responseError.errors.map( e => toastr["error"](e.defaultMessage));
+                toastr["error"]("Ops! Something wrong happened!");
             }
         }
     });
