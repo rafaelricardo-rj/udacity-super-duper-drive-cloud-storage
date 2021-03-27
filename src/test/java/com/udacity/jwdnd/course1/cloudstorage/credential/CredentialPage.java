@@ -1,4 +1,4 @@
-package com.udacity.jwdnd.course1.cloudstorage;
+package com.udacity.jwdnd.course1.cloudstorage.credential;
 
 import com.udacity.jwdnd.course1.cloudstorage.access.LoginPage;
 import com.udacity.jwdnd.course1.cloudstorage.access.SignUpPage;
@@ -56,7 +56,7 @@ public class CredentialPage {
     }
 
     @Test
-    public void deleteCredential() throws InterruptedException {
+    public void deleteCredential() {
         CredentialTest credentialTest = new CredentialTest(driver);
         credentialTest.createCredential();
         credentialTest.deleteCredential();

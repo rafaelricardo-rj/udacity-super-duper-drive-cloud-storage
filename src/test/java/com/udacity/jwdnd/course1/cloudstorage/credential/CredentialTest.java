@@ -1,4 +1,4 @@
-package com.udacity.jwdnd.course1.cloudstorage;
+package com.udacity.jwdnd.course1.cloudstorage.credential;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;

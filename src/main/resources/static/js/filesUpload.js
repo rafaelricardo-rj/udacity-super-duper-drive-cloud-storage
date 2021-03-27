@@ -59,7 +59,7 @@ const uploadFile = () => {
 
 const appendNewFile = (fileId, url, filename) => {
         const row = `
-            <tr id=fileRow-${fileId}>
+            <tr id=fileRow-${fileId} class="newFileUploadedTest">
                 <td>
                     <a href="${url}" target="_blank" class="btn btn-success">View</a>
                     <button class="btn btn-danger file-delete"  data-file-id="${fileId}">Delete</button>
