@@ -60,7 +60,7 @@ public class CredentialTest {
     public void deleteCredential(){
         //createCredential();
         WebDriverWait wait = new WebDriverWait(driver, 200);
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.className("credential-delete"))).isDisplayed();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.className("newCredentialTest"))).isDisplayed();
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", driver.findElement(deleteCredentialButton));
         wait.until(ExpectedConditions.invisibilityOf(driver.findElement(deleteCredentialButton)));
     }

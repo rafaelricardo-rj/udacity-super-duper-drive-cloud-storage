@@ -6,9 +6,13 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
@@ -20,8 +24,13 @@ public class BasePage {
     protected WebDriver driver;
 
     protected void beforeEach() {
+        ChromeOptions options = new ChromeOptions();
 
-        this.driver = new ChromeDriver();
+        Map<String, Object> prefs = new HashMap<String, Object>();
+        prefs.put("download.prompt_for_download", false);
+        options.setExperimentalOption("prefs", prefs);
+
+        this.driver = new ChromeDriver(options);
 
         driver.get("http://localhost:" + this.port + "/signup");
         SignUpPage signUpPage = new SignUpPage(driver);

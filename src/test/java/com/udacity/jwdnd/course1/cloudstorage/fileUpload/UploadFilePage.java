@@ -5,6 +5,8 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.NoSuchElementException;
 
+import java.util.concurrent.TimeUnit;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class UploadFilePage extends BasePage {
@@ -29,6 +31,12 @@ public class UploadFilePage extends BasePage {
         UploadFileTest uploadFileTest = new UploadFileTest(driver);
         uploadFileTest.uploadFile();
         Assertions.assertEquals(true, uploadFileTest.isFileUploaded());
+    }
+
+    @Test
+    public void download() throws InterruptedException {
+        UploadFileTest uploadFileTest = new UploadFileTest(driver);
+        uploadFileTest.downloadFile();
     }
 
     @Test

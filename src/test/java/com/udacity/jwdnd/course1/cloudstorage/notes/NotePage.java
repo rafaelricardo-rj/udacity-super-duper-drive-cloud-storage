@@ -34,6 +34,7 @@ public class NotePage extends BasePage {
     @Test
     public void deleteNote() throws InterruptedException {
         NotesTest notesTest = new NotesTest(driver);
+        notesTest.createNote();
         notesTest.deleteNote();
         // test there should be no note data on homepage:
         assertThrows(NoSuchElementException.class, () -> {

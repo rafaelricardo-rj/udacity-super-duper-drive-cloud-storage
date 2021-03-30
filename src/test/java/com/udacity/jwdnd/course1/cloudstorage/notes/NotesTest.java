@@ -14,6 +14,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -86,6 +88,7 @@ public class NotesTest {
 
     public void deleteNote(){
         WebDriverWait wait = new WebDriverWait(driver, 200);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", driver.findElement(By.id("nav-notes-tab")));
         wait.until(ExpectedConditions.presenceOfElementLocated(By.className("note-delete"))).isDisplayed();
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", driver.findElement(deleteNoteButton));
         wait.until(ExpectedConditions.invisibilityOf(driver.findElement(deleteNoteButton)));
@@ -95,7 +98,8 @@ public class NotesTest {
         createNote();
         WebDriverWait wait = new WebDriverWait(driver, 200);
         //wait the note to appear
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.className("note-edit"))).isDisplayed();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.className("newNoteTest"))).isDisplayed();
+
         //clink on edit button
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", driver.findElement(editNoteButton));
         //wait the input-text visibility
@@ -118,11 +122,7 @@ public class NotesTest {
         String titleAfterEdit = driver.findElement(By.id("note-title")).getAttribute("value");
         //fetch the description
         String descAfterEdit = driver.findElement(By.id("note-description")).getAttribute("value");
-        try {
-            Thread.sleep(8000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
         assertEquals(false, titleBeforeEdit.equals(titleAfterEdit));
         assertEquals(false, descBeforeEdit.equals(descAfterEdit));
     }
@@ -130,6 +130,14 @@ public class NotesTest {
     private void waitForVisibility(WebElement element) throws Error {
         new WebDriverWait(driver, 40)
                 .until(ExpectedConditions.visibilityOf(element));
+    }
+
+    private void getTableData(){
+        WebElement base = driver.findElement(By.id("userTable"));
+        List<WebElement> tableRows = base.findElements(By.tagName("tr"));
+        List<WebElement> tableCols = tableRows.get(0).findElements(By.tagName("td"));
+        //String cellValue = tableCols.get(0).getText();
+        System.out.println(tableCols.size());
     }
 
     public void logout(){
