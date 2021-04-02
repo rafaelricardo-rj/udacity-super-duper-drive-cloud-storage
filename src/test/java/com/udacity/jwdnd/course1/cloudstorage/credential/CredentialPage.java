@@ -2,7 +2,9 @@ package com.udacity.jwdnd.course1.cloudstorage.credential;
 
 import com.udacity.jwdnd.course1.cloudstorage.BasePage;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.junit.FixMethodOrder;
 import org.junit.jupiter.api.*;
+import org.junit.runners.MethodSorters;
 import org.openqa.selenium.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -25,14 +27,14 @@ public class CredentialPage extends BasePage {
     }
 
     @Test
-    public void createCredential() {
+    public void aCreateCredential() {
         CredentialTest credentialTest = new CredentialTest(driver);
         credentialTest.createCredential();
         Assertions.assertEquals(true, credentialTest.isCredentialCreated());
     }
 
     @Test
-    public void deleteCredential() {
+    public void cDeleteCredential() {
         CredentialTest credentialTest = new CredentialTest(driver);
         credentialTest.createCredential();
         credentialTest.deleteCredential();
@@ -43,7 +45,7 @@ public class CredentialPage extends BasePage {
     }
 
     @Test
-    public void editCredential(){
+    public void bEditCredential(){
         CredentialTest credentialTest = new CredentialTest(driver);
         credentialTest.editCredential();
     }

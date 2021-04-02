@@ -1,18 +1,11 @@
 package com.udacity.jwdnd.course1.cloudstorage.notes;
 
-import com.udacity.jwdnd.course1.cloudstorage.HomePage;
-import com.udacity.jwdnd.course1.cloudstorage.access.LoginPage;
-import com.udacity.jwdnd.course1.cloudstorage.access.SignUpPage;
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.web.server.LocalServerPort;
 
 import java.util.List;
 

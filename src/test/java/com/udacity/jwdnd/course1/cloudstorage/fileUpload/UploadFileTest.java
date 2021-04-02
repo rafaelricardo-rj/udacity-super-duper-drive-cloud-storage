@@ -47,8 +47,8 @@ public class UploadFileTest {
     }
 
     public void downloadFile() throws InterruptedException {
-        uploadFile();
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.className("newFileUploadedTest")));
+        //uploadFile();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.className("file-delete")));
         WebElement link = driver.findElement(By.xpath("/html/body/div/div[2]/div/div[1]/div/table/tbody/tr[1]/td/a"));
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", link);

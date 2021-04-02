@@ -25,14 +25,14 @@ public class NotePage extends BasePage {
     }
 
     @Test
-    public void createNote() {
+    public void aCreateNote() {
         NotesTest notesTest = new NotesTest(driver);
         notesTest.createNote();
         Assertions.assertEquals(true, notesTest.isNoteCreated());
     }
 
     @Test
-    public void deleteNote() throws InterruptedException {
+    public void cDeleteNote() throws InterruptedException {
         NotesTest notesTest = new NotesTest(driver);
         notesTest.createNote();
         notesTest.deleteNote();
@@ -43,7 +43,7 @@ public class NotePage extends BasePage {
     }
 
     @Test
-    public void editNote(){
+    public void dEditNote(){
         NotesTest notesTest = new NotesTest(driver);
         notesTest.editNote();
     }
