@@ -22,6 +22,13 @@ public class HomeController {
     private NoteService noteService;
     private CredentialService credentialService;
 
+    /**
+     * Constructor
+     * @param userService
+     * @param noteService
+     * @param credentialService
+     * @param fileService
+     */
     public HomeController(UserService userService, NoteService noteService, CredentialService credentialService, FileService fileService){
         this.userService = userService;
         this.fileService = fileService;
@@ -29,6 +36,14 @@ public class HomeController {
         this.credentialService = credentialService;
     }
 
+    /**
+     * Load the home page.
+     * @param noteForm
+     * @param credentialForm
+     * @param model
+     * @param auth
+     * @return home.html
+     */
     @GetMapping
     public String homeView(NoteForm noteForm, CredentialForm credentialForm, Model model, Authentication auth){
         User user = userService.getUser(auth.getName());

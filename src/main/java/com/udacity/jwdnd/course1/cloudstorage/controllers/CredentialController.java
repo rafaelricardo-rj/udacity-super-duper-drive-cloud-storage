@@ -28,11 +28,24 @@ public class CredentialController {
     private UserService userService;
     private CredentialService credentialService;
 
+    /**
+     *
+     * @param userService
+     * @param credentialService
+     */
     public CredentialController(UserService userService, CredentialService credentialService) {
         this.userService = userService;
         this.credentialService = credentialService;
     }
 
+    /**
+     * Create a new credential.
+     *
+     * @param credentialForm
+     * @param auth
+     * @param result
+     * @return ResponseCredentialForm
+     */
     @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     public ResponseCredentialForm credentialPost(@ModelAttribute @Valid CredentialForm credentialForm, Authentication auth, BindingResult result){
@@ -66,6 +79,12 @@ public class CredentialController {
         return respCredentialForm;
     }
 
+    /**
+     * Delete a credential
+     * @param id
+     * @param auth
+     * @return ResponseCredentialForm
+     */
     @DeleteMapping(value = "{id}/delete", produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     public ResponseCredentialForm credentialDelete(@PathVariable Integer id, Authentication auth){
@@ -84,6 +103,12 @@ public class CredentialController {
         return responseCredentialForm;
     }
 
+    /**
+     * Get a credential by Id
+     * @param id
+     * @param auth
+     * @return ResponseCredentialForm
+     */
     @PostMapping(value = "{id}/fetch", produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     public ResponseCredentialForm credentialFetch(@PathVariable Integer id, Authentication auth){
@@ -102,6 +127,14 @@ public class CredentialController {
         return responseCredentialForm;
     }
 
+    /**
+     * Update a credential selected by it Id
+     * @param credentialForm
+     * @param id
+     * @param auth
+     * @param result
+     * @return ResponseCredentialForm
+     */
     @PatchMapping(value = "{id}/update", produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     public ResponseCredentialForm noteUpdate(@ModelAttribute @Valid CredentialForm credentialForm, @PathVariable Integer id, Authentication auth, BindingResult result){

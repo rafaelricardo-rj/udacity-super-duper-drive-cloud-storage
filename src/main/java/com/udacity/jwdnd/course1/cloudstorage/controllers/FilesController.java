@@ -32,11 +32,22 @@ public class FilesController {
     private UserService userService;
     private FileService fileService;
 
+    /**
+     * Constructor
+     * @param userService
+     * @param fileService
+     */
     public FilesController(UserService userService, FileService fileService) {
         this.userService = userService;
         this.fileService = fileService;
     }
 
+    /**
+     * Upload a file
+     * @param multipartFile
+     * @param auth
+     * @return ResponseFileUpload
+     */
     @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     public ResponseFileUpload fileNew(@RequestParam("fileUpload") MultipartFile multipartFile, Authentication auth){
@@ -74,6 +85,12 @@ public class FilesController {
         return responseFileUpload;
     }
 
+    /**
+     * Delete a file
+     * @param id
+     * @param auth
+     * @return ResponseFileUpload
+     */
     @DeleteMapping(value = "{id}/delete", produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     public ResponseFileUpload fileDelete(@PathVariable Integer id, Authentication auth){
@@ -93,6 +110,14 @@ public class FilesController {
         return responseFileUpload;
     }
 
+    /**
+     * Download a file
+     * @param request
+     * @param response
+     * @param fileName
+     * @param auth
+     * @throws IOException
+     */
     @RequestMapping("/download/{fileName:.+}")
     public void downloadFile(HttpServletRequest request, HttpServletResponse response,  @PathVariable("fileName") String fileName, Authentication auth) throws IOException {
         User user = userService.getUser(auth.getName());

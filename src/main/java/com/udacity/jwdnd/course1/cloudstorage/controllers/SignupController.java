@@ -15,15 +15,29 @@ public class SignupController {
 
     private final UserService userService;
 
+    /**
+     * Constructor
+     * @param userService
+     */
     public SignupController(UserService userService) {
         this.userService = userService;
     }
 
+    /**
+     * Load signUp page
+     * @return signup.html
+     */
     @GetMapping()
     public String signupView(){
         return "signup";
     }
 
+    /**
+     * Sign up a user
+     * @param user
+     * @param model
+     * @return signup.html
+     */
     @PostMapping()
     public String signupUser(@ModelAttribute User user, Model model){
         String signupError = null;

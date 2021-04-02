@@ -31,11 +31,23 @@ public class NoteController {
 
     private UserService userService;
 
+    /**
+     * Constructor
+     * @param userService
+     * @param noteService
+     */
     public NoteController(UserService userService, NoteService noteService){
         this.userService = userService;
         this.noteService = noteService;
     }
 
+    /**
+     * Create a new note.
+     * @param noteForm
+     * @param auth
+     * @param result
+     * @return ResponseNoteForm
+     */
     @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     public ResponseNoteForm notePost(@ModelAttribute @Valid NoteForm noteForm, Authentication auth, BindingResult result){
@@ -67,6 +79,12 @@ public class NoteController {
         return responseNoteForm;
     }
 
+    /**
+     * Delete a note by Id
+     * @param id
+     * @param auth
+     * @return ResponseNoteForm
+     */
     @DeleteMapping(value = "{id}/delete", produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     public ResponseNoteForm noteDelete(@PathVariable Integer id, Authentication auth){
@@ -85,6 +103,14 @@ public class NoteController {
         return responseNoteForm;
     }
 
+    /**
+     * Update a note by Id
+     * @param noteForm
+     * @param id
+     * @param auth
+     * @param result
+     * @return ResponseNoteForm
+     */
     @PatchMapping(value = "{id}/update", produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     public ResponseNoteForm noteUpdate(@ModelAttribute @Valid NoteForm noteForm, @PathVariable Integer id, Authentication auth, BindingResult result){
