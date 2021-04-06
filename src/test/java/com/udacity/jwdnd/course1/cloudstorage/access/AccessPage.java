@@ -60,7 +60,7 @@ public class AccessPage extends BasePage {
         if(driver.findElement(By.cssSelector("div.alert-dark")).isDisplayed()){
             message = driver.findElement(By.cssSelector("div.alert-dark")).getText();
         }
-        Assertions.assertEquals("You successfully signed up! Please continue to the login page.", message);
+        Assertions.assertEquals("You successfully signed up! Please type your login and password to access the page.", message);
     }
 
     @Test

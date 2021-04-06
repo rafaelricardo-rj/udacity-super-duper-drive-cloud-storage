@@ -65,6 +65,6 @@ public class BasePage {
     }
 
     protected WebDriverWait waitTime(){
-        return new WebDriverWait(driver, 200);
+        return new WebDriverWait(driver, 300);
     }
 }

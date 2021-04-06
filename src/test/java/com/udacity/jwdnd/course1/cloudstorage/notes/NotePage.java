@@ -43,7 +43,7 @@ public class NotePage extends BasePage {
     }
 
     @Test
-    public void dEditNote(){
+    public void bEditNote(){
         NotesTest notesTest = new NotesTest(driver);
         notesTest.editNote();
     }
