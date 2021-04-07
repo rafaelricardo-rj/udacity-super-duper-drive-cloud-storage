@@ -43,7 +43,7 @@ const saveNote = () => {
             _method: method
         },
          function call_back(response) {
-          console.log(response);
+          //console.log(response);
           if(response.validated == true){
             $('#noteModal').modal('hide');
             if(action == 'update'){

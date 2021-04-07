@@ -48,7 +48,7 @@ const saveCredential = () => {
                 _method: method
             },
              function call_back(response) {
-              console.log(response);
+              //console.log(response);
               if(response.validated == true){
                 $('#credentialModal').modal('hide');
                 if(action == 'update'){
@@ -56,13 +56,15 @@ const saveCredential = () => {
                 }
                 toastr["success"]("Credential Saved.")
                 appendNewCredential(response.credentialId, url, username, response.encryptedPassword);
+              } else {
+                toastr["error"](response.errorMessages.error)
               }
             }).fail(function (xhr, status, error){
                 let responseError = JSON.parse(xhr.responseText);
                 if(status == 'error'){
                     responseError.errors.map( e => toastr["error"](e.defaultMessage));
                 }
-                console.log(responseError.errors);
+                //console.log(responseError.errors);
             });
     }
 }

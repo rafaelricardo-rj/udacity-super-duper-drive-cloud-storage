@@ -60,6 +60,14 @@ public class CredentialController {
             respCredentialForm.setErrorMessages(errors);
             return respCredentialForm;
         } else {
+            // Check if credential is duplicated
+            if(credentialService.isDuplicated(credentialForm.getUrl(), credentialForm.getUsername())){
+                respCredentialForm.setValidated(false);
+                errors = new HashMap<>();
+                errors.put("error", "User already available.");
+                respCredentialForm.setErrorMessages(errors);
+                return respCredentialForm;
+            }
             try {
                 int userId = userService.getUser(auth.getName()).getUserid();
                 newCredential = credentialService.addCredential(new Credential(null, credentialForm.getUrl(), credentialForm.getUsername(), null, credentialForm.getPassword(), userId));

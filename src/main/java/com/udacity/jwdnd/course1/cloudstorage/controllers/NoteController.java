@@ -63,19 +63,11 @@ public class NoteController {
             responseNoteForm.setErrorMessages(errors);
             return responseNoteForm;
         } else {
-            // Check if exist note with the same Title
-            if(noteService.titleExist(noteForm.getNotetitle())){
+            // Check if note is duplicated
+            if(noteService.isDuplicated(noteForm.getNotetitle(), noteForm.getNotedescription())){
                 responseNoteForm.setValidated(false);
                 errors = new HashMap<>();
-                errors.put("error", "Title already exist. Choose another title.");
-                responseNoteForm.setErrorMessages(errors);
-                return responseNoteForm;
-            }
-            // Check if exist note with the same Description
-            if(noteService.descriptionExist(noteForm.getNotedescription())){
-                responseNoteForm.setValidated(false);
-                errors = new HashMap<>();
-                errors.put("error", "Description already exist. Write a different description.");
+                errors.put("error", "Note already available.");
                 responseNoteForm.setErrorMessages(errors);
                 return responseNoteForm;
             }
