@@ -43,7 +43,7 @@ const saveNote = () => {
             _method: method
         },
          function call_back(response) {
-          //console.log(response);
+          console.log(response);
           if(response.validated == true){
             $('#noteModal').modal('hide');
             if(action == 'update'){
@@ -54,7 +54,7 @@ const saveNote = () => {
             $('#noteModal').modal('hide');
           } else {
             $('#noteModal').modal('hide');
-            toastr["error"]("The Note was not created.")
+            toastr["error"](response.errorMessages.error)
           }
 
         }).fail(function (xhr, status, error){

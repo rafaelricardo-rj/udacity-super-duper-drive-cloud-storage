@@ -29,11 +29,43 @@ public class NoteService {
         return noteMapper.getNote(noteId);
     }
 
+    public Note getNoteByTitle(String title){
+        return noteMapper.getNoteByTitle(title);
+    }
+
+    public Note getNoteByDesc(String desc){
+        return noteMapper.getNoteByDescription(desc);
+    }
+
     public int delete(int noteId){
         return noteMapper.deleteNote(noteId);
     }
 
     public int update(Note note){
         return noteMapper.updateNote(note);
+    }
+
+    public Boolean titleExist(String title){
+        try {
+            Note note = getNoteByTitle(title);
+            if(note != null){
+                return true;
+            }
+        } catch (Exception e){
+            return false;
+        }
+        return false;
+    }
+
+    public Boolean descriptionExist(String desc){
+        try {
+            Note note = getNoteByDesc(desc);
+            if(note != null){
+                return true;
+            }
+        } catch (Exception e){
+            return false;
+        }
+        return false;
     }
 }

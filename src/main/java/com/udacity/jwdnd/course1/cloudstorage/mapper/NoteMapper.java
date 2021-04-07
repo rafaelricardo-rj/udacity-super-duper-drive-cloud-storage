@@ -20,6 +20,12 @@ public interface NoteMapper {
     @Select("SELECT * FROM NOTES WHERE noteid = #{noteid}")
     Note getNote(int noteId);
 
+    @Select("SELECT * FROM NOTES WHERE notetitle = #{notetitle}")
+    Note getNoteByTitle(String title);
+
+    @Select("SELECT * FROM NOTES WHERE notedescription = #{notedescription}")
+    Note getNoteByDescription(String description);
+
     @Insert("INSERT INTO NOTES ( notetitle, notedescription, userid) VALUES ( #{notetitle}, #{notedescription}, #{userid} )")
     @Options(useGeneratedKeys = true, keyProperty = "noteid")
     int insert(Note note);
